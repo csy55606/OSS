@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Learning Tracker</h1>
+
+        <h2>Your Learning Records</h2>
+        <ul>
+            {% if records %}
+                {% for record in records %}
+                    <li>
+                        <strong>Goal:</strong> {{ record['goal'] }}<br>
+                        <strong>Daily Record:</strong> {{ record['daily_record'] }}
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>No records found.</li>
+            {% endif %}
+        </ul>
+
+        <h2>Generate Weekly Report</h2>
+        <form action="/generate_report" method="get">
+            <button type="submit">Generate Report</button>
+        </form>
+
+        <h2>Reset Learning Records</h2>
+        <form action="/reset" method="POST">
+            <button type="submit">Reset Records</button>
+        </form>
+
+        <h2>Add Learning Goal and Daily Record</h2>
+        <form action="/add_record" method="POST">
+            <input type="text" name="goal" placeholder="Enter your learning goal" required>
+            <textarea name="daily_record" placeholder="Describe your daily activities" required></textarea>
+            <button type="submit">Add Record</button>
+        </form>
+    </div>
+</body>
+</html>
